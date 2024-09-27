@@ -4,14 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institute List</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        button {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Institute List</h1>
     <ul id="entry-list"></ul>
-    <button id="save-btn" class="save">Save as JSON</button>
-    <button id="download-word-btn" class="word">Download as Word</button>
 
-    <script src="scripts.js"></script> <!-- Link to JavaScript file -->
+    <button id="save-btn">Save as JSON</button>
+    <button id="download-word-btn">Download as Word</button>
+
+    <script src="script.js"></script>
 </body>
 </html>
