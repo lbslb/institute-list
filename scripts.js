@@ -39,18 +39,18 @@ const entries = [
 // Get the entry list element from the HTML
 const entryList = document.getElementById("entry-list");
 
-// Function to render the list with static serial numbers
+// Function to render the list with dynamic serial numbers
 function renderList() {
     entryList.innerHTML = ""; // Clear the existing list
 
-    entries.forEach((entry) => {
+    entries.forEach((entry, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            <span style="font-weight: bold;">${entry.id}.</span> <!-- Unchangeable serial number -->
+            <span style="font-weight: bold;">${index + 1}.</span> <!-- Dynamic serial number based on index -->
             ${entry.institute} - ₹${entry.stipend}, Bond: ${entry.bondYears} years, Bond Amount: ${entry.bondAmount}
             <div style="display: inline-block; margin-left: 10px;">
-                <button onclick="moveUp(${entry.id - 1})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">▲</button>
-                <button onclick="moveDown(${entry.id - 1})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #f44336; color: white; border: none; border-radius: 5px;">▼</button>
+                <button onclick="moveUp(${index})" class="move-up">▲</button>
+                <button onclick="moveDown(${index})" class="move-down">▼</button>
             </div>
         `;
         li.style.margin = "10px 0";  // Add spacing between list items
@@ -78,15 +78,21 @@ function moveDown(index) {
     }
 }
 
-// Save list to a file
-document.getElementById("save-btn").addEventListener("click", () => {
-    const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
+// Download as Word file
+document.getElementById("download-btn").addEventListener("click", () => {
+    let content = "<h2>Institute List</h2><table><tr><th>Serial No</th><th>Institute</th><th>Stipend</th><th>Bond Years</th><th>Bond Amount</th></tr>";
+
+    entries.forEach((entry, index) => {
+        content += `<tr><td>${index + 1}</td><td>${entry.institute}</td><td>₹${entry.stipend}</td><td>${entry.bondYears}</td><td>${entry.bondAmount}</td></tr>`;
+    });
+    content += "</table>";
+
+    const blob = new Blob([content], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "institute_list.json";
+    link.download = "institute_list.doc";
     link.click();
 });
 
-// Download list as a Word document
-document.getElementById("download-word-btn").addEventListener("click", () => {
-   
+// Initialize the list when the page loads
+renderList();
