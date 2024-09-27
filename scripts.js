@@ -39,18 +39,18 @@ const entries = [
 // Get the entry list element from the HTML
 const entryList = document.getElementById("entry-list");
 
-// Function to render the list with dynamic serial numbers
+// Function to render the list with unchangeable serial numbers
 function renderList() {
     entryList.innerHTML = ""; // Clear the existing list
 
     entries.forEach((entry, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            <span style="font-weight: bold;">${index + 1}.</span> 
+            <span style="font-weight: bold;">${entry.id}.</span> <!-- Unchangeable serial number -->
             ${entry.institute} - ₹${entry.stipend}, Bond: ${entry.bondYears} years, Bond Amount: ${entry.bondAmount}
             <div style="display: inline-block; margin-left: 10px;">
-                <button onclick="moveUp(${index})" class="up">▲</button>
-                <button onclick="moveDown(${index})" class="down">▼</button>
+                <button onclick="moveUp(${index})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">▲</button>
+                <button onclick="moveDown(${index})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #f44336; color: white; border: none; border-radius: 5px;">▼</button>
             </div>
         `;
         li.style.margin = "10px 0";  // Add spacing between list items
@@ -87,21 +87,22 @@ document.getElementById("save-btn").addEventListener("click", () => {
     link.click();
 });
 
-// Download list as a Word document
+// Download list as Word document
 document.getElementById("download-word-btn").addEventListener("click", () => {
-    let wordContent = '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="utf-8" /><title>Institute List</title></head><body>';
-    wordContent += '<h1>Institute List</h1><ul>';
-    entries.forEach((entry, index) => {
-        wordContent += `<li>${index + 1}. ${entry.institute} - ₹${entry.stipend}, Bond: ${entry.bondYears} years, Bond Amount: ${entry.bondAmount}</li>`;
+    let content = "<html><head><title>Institute List</title></head><body><h1>Institute List</h1><table border='1'><tr><th>Serial Number</th><th>Institute</th><th>Stipend</th><th>Bond Years</th><th>Bond Amount</th></tr>";
+    
+    entries.forEach(entry => {
+        content += `<tr><td>${entry.id}</td><td>${entry.institute}</td><td>₹${entry.stipend}</td><td>${entry.bondYears}</td><td>${entry.bondAmount}</td></tr>`;
     });
-    wordContent += '</ul></body></html>';
 
-    const blob = new Blob([wordContent], { type: 'application/msword' });
+    content += "</table></body></html>";
+    
+    const blob = new Blob([content], { type: "application/msword" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = 'institute_list.doc';
+    link.download = "institute_list.doc";
     link.click();
 });
 
-// Initial rendering of the list
+// Initialize the list when the page loads
 renderList();
