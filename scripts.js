@@ -39,18 +39,18 @@ const entries = [
 // Get the entry list element from the HTML
 const entryList = document.getElementById("entry-list");
 
-// Function to render the list with dynamic serial numbers
+// Function to render the list with static serial numbers
 function renderList() {
     entryList.innerHTML = ""; // Clear the existing list
 
-    entries.forEach((entry, index) => {
+    entries.forEach((entry) => {
         const li = document.createElement("li");
         li.innerHTML = `
             <span style="font-weight: bold;">${entry.id}.</span> <!-- Unchangeable serial number -->
             ${entry.institute} - ₹${entry.stipend}, Bond: ${entry.bondYears} years, Bond Amount: ${entry.bondAmount}
             <div style="display: inline-block; margin-left: 10px;">
-                <button onclick="moveUp(${index})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">▲</button>
-                <button onclick="moveDown(${index})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #f44336; color: white; border: none; border-radius: 5px;">▼</button>
+                <button onclick="moveUp(${entry.id - 1})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">▲</button>
+                <button onclick="moveDown(${entry.id - 1})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #f44336; color: white; border: none; border-radius: 5px;">▼</button>
             </div>
         `;
         li.style.margin = "10px 0";  // Add spacing between list items
@@ -89,6 +89,4 @@ document.getElementById("save-btn").addEventListener("click", () => {
 
 // Download list as a Word document
 document.getElementById("download-word-btn").addEventListener("click", () => {
-    let wordContent = "<h1>Institute List</h1><ul>";
-    entries.forEach(entry => {
-        wordContent += `<li>${entry.id}. ${entry.institute} -
+   
