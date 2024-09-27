@@ -39,7 +39,7 @@ const entries = [
 // Get the entry list element from the HTML
 const entryList = document.getElementById("entry-list");
 
-// Function to render the list with unchangeable serial numbers
+// Function to render the list with dynamic serial numbers
 function renderList() {
     entryList.innerHTML = ""; // Clear the existing list
 
@@ -78,7 +78,7 @@ function moveDown(index) {
     }
 }
 
-// Save list to a JSON file
+// Save list to a file
 document.getElementById("save-btn").addEventListener("click", () => {
     const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
@@ -87,22 +87,8 @@ document.getElementById("save-btn").addEventListener("click", () => {
     link.click();
 });
 
-// Download list as Word document
+// Download list as a Word document
 document.getElementById("download-word-btn").addEventListener("click", () => {
-    let content = "<html><head><title>Institute List</title></head><body><h1>Institute List</h1><table border='1'><tr><th>Serial Number</th><th>Institute</th><th>Stipend</th><th>Bond Years</th><th>Bond Amount</th></tr>";
-    
+    let wordContent = "<h1>Institute List</h1><ul>";
     entries.forEach(entry => {
-        content += `<tr><td>${entry.id}</td><td>${entry.institute}</td><td>₹${entry.stipend}</td><td>${entry.bondYears}</td><td>${entry.bondAmount}</td></tr>`;
-    });
-
-    content += "</table></body></html>";
-    
-    const blob = new Blob([content], { type: "application/msword" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "institute_list.doc";
-    link.click();
-});
-
-// Initialize the list when the page loads
-renderList();
+        wordContent += `<li>${entry.id}. ${entry.institute} -
