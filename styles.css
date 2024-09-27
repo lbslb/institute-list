@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+#list-container {
+    width: 50%;
+    margin: auto;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+}
+button {
+    margin: 10px;
+    padding: 10px;
+}
