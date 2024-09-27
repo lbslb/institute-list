@@ -10,11 +10,11 @@ const entries = [
     { id: 8, institute: "Punjab", stipend: 67000, bondYears: 1, bondAmount: "10,00,000" },
     { id: 9, institute: "UP", stipend: 95000, bondYears: 2, bondAmount: "40,00,000" },
     { id: 10, institute: "SKIMS J&K", stipend: 79000, bondYears: 0, bondAmount: "0" },
-    { id: 11, institute: "PGI Rohtak", stipend: 100000, bondYears: "NA", bondAmount: "NA" },
+    { id: 11, institute: "Pgi Rohtak", stipend: 100000, bondYears: "NA", bondAmount: "NA" },
     { id: 12, institute: "Maharashtra", stipend: 76000, bondYears: 1, bondAmount: "50,00,000" },
     { id: 13, institute: "Rajasthan", stipend: 77000, bondYears: 2, bondAmount: "25,00,000" },
     { id: 14, institute: "Uttarakhand", stipend: 76000, bondYears: 2, bondAmount: "2,50,00,000" },
-    { id: 15, institute: "Odisha", stipend: 65000, bondYears: 2, bondAmount: "46,00,000" },
+    { id: 15, institute: "Odhisha", stipend: 65000, bondYears: 2, bondAmount: "46,00,000" },
     { id: 16, institute: "MP", stipend: 69000, bondYears: 1, bondAmount: "10,00,000" },
     { id: 17, institute: "Gujarat", stipend: 84000, bondYears: 1, bondAmount: "40,00,000" },
     { id: 18, institute: "Goa", stipend: 60000, bondYears: 1, bondAmount: "50,00,000" },
@@ -46,11 +46,11 @@ function renderList() {
     entries.forEach((entry, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            <span style="font-weight: bold;">${index + 1}.</span> <!-- Dynamic serial number based on index -->
+            <span style="font-weight: bold;">${index + 1}.</span> 
             ${entry.institute} - ₹${entry.stipend}, Bond: ${entry.bondYears} years, Bond Amount: ${entry.bondAmount}
             <div style="display: inline-block; margin-left: 10px;">
-                <button onclick="moveUp(${index})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">▲</button>
-                <button onclick="moveDown(${index})" style="font-size: 16px; padding: 5px 10px; cursor: pointer; background-color: #f44336; color: white; border: none; border-radius: 5px;">▼</button>
+                <button onclick="moveUp(${index})" class="up">▲</button>
+                <button onclick="moveDown(${index})" class="down">▼</button>
             </div>
         `;
         li.style.margin = "10px 0";  // Add spacing between list items
@@ -83,31 +83,4 @@ document.getElementById("save-btn").addEventListener("click", () => {
     const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "institute_list.json";
-    link.click();
-});
-
-// Download list as a Word document
-document.getElementById("download-word-btn").addEventListener("click", () => {
-    let wordContent = "<h1>Institute List</h1><table border='1'><tr><th>S.No</th><th>Institute</th><th>Stipend</th><th>Bond Years</th><th>Bond Amount</th></tr>";
-
-    entries.forEach((entry, index) => {
-        wordContent += `
-            <tr>
-                <td>${index + 1}</td>
-                <td>${entry.institute}</td>
-                <td>₹${entry.stipend}</td>
-                <td>${entry.bondYears}</td>
-                <td>${entry.bondAmount}</td>
-            </tr>`;
-    });
-
-    wordContent += "</table>";
-    
-    const blob = new Blob([wordContent], { type: 'application/msword' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'institute_list.doc';
-    document.body.appendChild(a);
-    a.click
+    link.download = "institute_list.json
