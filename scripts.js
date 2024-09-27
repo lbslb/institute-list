@@ -83,4 +83,25 @@ document.getElementById("save-btn").addEventListener("click", () => {
     const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "institute_list.json
+    link.download = "institute_list.json";
+    link.click();
+});
+
+// Download list as a Word document
+document.getElementById("download-word-btn").addEventListener("click", () => {
+    let wordContent = '<html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="utf-8" /><title>Institute List</title></head><body>';
+    wordContent += '<h1>Institute List</h1><ul>';
+    entries.forEach((entry, index) => {
+        wordContent += `<li>${index + 1}. ${entry.institute} - ₹${entry.stipend}, Bond: ${entry.bondYears} years, Bond Amount: ${entry.bondAmount}</li>`;
+    });
+    wordContent += '</ul></body></html>';
+
+    const blob = new Blob([wordContent], { type: 'application/msword' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = 'institute_list.doc';
+    link.click();
+});
+
+// Initial rendering of the list
+renderList();
